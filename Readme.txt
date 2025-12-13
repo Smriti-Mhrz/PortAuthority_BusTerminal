@@ -39,8 +39,10 @@ End-to-end business intelligence solution analyzing passenger traffic patterns a
 ### Dimension Tables
 - `dim.Dim_Date` - Date/time attributes
 - `dim.Dim_Carrier` - Bus carrier information
-- `dim.Dim_Season` - Seasonal categorization
+- `dim.Dim_Weather` - Weather categorization
 - `dim.Dim_COVID_Status` - COVID period classification
+- `dim.Dim_Event' - Events in Newyork
+- `dim.Dim_Service_Type' - 
 
 ### Fact Table
 - `dbo.Fact_Passenger_Departures` - Core metrics (grain: weekly/carrier)
