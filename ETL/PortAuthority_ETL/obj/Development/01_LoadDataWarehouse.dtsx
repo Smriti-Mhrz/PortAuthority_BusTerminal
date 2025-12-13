@@ -1,0 +1,2260 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/10/2025 9:58:10 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SMRITIDELLINS15"
+  DTS:CreatorName="SMRITIDELLINS15\smrit"
+  DTS:DTSID="{9B66F04B-E1CC-4707-8090-5459FF593185}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="01_LoadDataWarehouse"
+  DTS:PackageType="5"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{1F2EE53D-30AB-46E1-9F28-E96042C758C6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{017C77D0-ECAC-4469-8D48-FB98E8A6E5D0}"
+      DTS:ObjectName="SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SMRITIDELLINS15\SQLSERVER2022;Initial Catalog=PortAuthority_DW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-01_LoadDataWarehouse-{017C77D0-ECAC-4469-8D48-FB98E8A6E5D0}SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT- Load Dim_Carrier"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F01FF12B-1FEA-49AE-A047-2B9ECAAF8CAC}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT- Load Dim_Carrier"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT- Load Dim_Carrier\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT 
+    ROW_NUMBER() OVER (ORDER BY Carrier_Name) AS Carrier_Key,
+    Carrier_Name,
+    Carrier_Full_Name
+FROM dbo.FinalDataset
+WHERE Carrier_Name IS NOT NULL
+ORDER BY Carrier_Name;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Key]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Key]"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Key]"
+                      name="Carrier_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Name]"
+                      length="50"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Name]"
+                      name="Carrier_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Full_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Full_Name]"
+                      length="50"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Full_Name]"
+                      name="Carrier_Full_Name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Key]"
+                      dataType="i8"
+                      name="Carrier_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Name]"
+                      dataType="wstr"
+                      length="50"
+                      name="Carrier_Name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Full_Name]"
+                      dataType="wstr"
+                      length="50"
+                      name="Carrier_Full_Name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Key]"
+                      dataType="i8"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Key]"
+                      name="Carrier_Key" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Name]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Name]"
+                      name="Carrier_Name" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Full_Name]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Full_Name]"
+                      name="Carrier_Full_Name" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT- Load Dim_Carrier\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT-Load Dim_Date"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5BA2F919-2C23-4C8A-9223-B5F2E607E40D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT-Load Dim_Date"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT-Load Dim_Date\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    CAST(FORMAT(TRY_CAST(Week_Date AS DATE), 'yyyyMMdd') AS INT) AS Date_Key,
+    TRY_CAST(Week_Date AS DATE) AS Week_Date,
+    Year,
+    Quarter,
+    Month,
+    Month_Name,
+    Week_of_Year,
+    Season,
+    CASE WHEN Is_Holiday = 'True' THEN 1 ELSE 0 END AS Is_Holiday,
+    CASE WHEN Is_Tourism_Peak = 'True' THEN 1 ELSE 0 END AS Is_Tourism_Peak
+FROM dbo.FinalDataset
+WHERE Week_Date IS NOT NULL
+ORDER BY Week_Date;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT-Load Dim_Date\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_Key]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_Key]"
+                      name="Date_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Week_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Week_Date]"
+                      length="10"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Week_Date]"
+                      name="Week_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      name="Quarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      name="Month"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month_Name]"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month_Name]"
+                      name="Month_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Week_of_Year]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Week_of_Year]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Week_of_Year]"
+                      name="Week_of_Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Season]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Season]"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Season]"
+                      name="Season"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Holiday]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Holiday]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Holiday]"
+                      name="Is_Holiday"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Tourism_Peak]"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Tourism_Peak]"
+                      name="Is_Tourism_Peak"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_Key]"
+                      dataType="i4"
+                      name="Date_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Week_Date]"
+                      dataType="wstr"
+                      length="10"
+                      name="Week_Date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i2"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      dataType="ui1"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      dataType="ui1"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month_Name]"
+                      dataType="wstr"
+                      length="50"
+                      name="Month_Name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Week_of_Year]"
+                      dataType="ui1"
+                      name="Week_of_Year" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Season]"
+                      dataType="wstr"
+                      length="50"
+                      name="Season" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Holiday]"
+                      dataType="i4"
+                      name="Is_Holiday" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      name="Is_Tourism_Peak" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_Key]"
+                      name="Date_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Week_Date]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Week_Date]"
+                      name="Week_Date" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i2"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      dataType="ui1"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      name="Quarter" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      dataType="ui1"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      name="Month" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month_Name]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month_Name]"
+                      name="Month_Name" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Week_of_Year]"
+                      dataType="ui1"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Week_of_Year]"
+                      name="Week_of_Year" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Season]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Season]"
+                      name="Season" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Holiday]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Holiday]"
+                      name="Is_Holiday" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Tourism_Peak]"
+                      name="Is_Tourism_Peak" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Date\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT-Load Dim_Service_Type"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AF24CB2F-F64A-41C3-A018-E3CF812E7A63}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT-Load Dim_Service_Type"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT-Load Dim_Service_Type\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT 
+    ROW_NUMBER() OVER (ORDER BY Service_Type) AS Service_Type_Key,
+    Service_Type,
+    Service_Type + ' service' AS Service_Description
+FROM dbo.FinalDataset
+WHERE Service_Type IS NOT NULL
+ORDER BY Service_Type;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type_Key]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type_Key]"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type_Key]"
+                      name="Service_Type_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type]"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type]"
+                      name="Service_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Description]"
+                      length="58"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Description]"
+                      name="Service_Description"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type_Key]"
+                      dataType="i8"
+                      name="Service_Type_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type]"
+                      dataType="wstr"
+                      length="50"
+                      name="Service_Type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Description]"
+                      dataType="wstr"
+                      length="58"
+                      name="Service_Description" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type_Key]"
+                      dataType="i8"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type_Key]"
+                      name="Service_Type_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type]"
+                      name="Service_Type" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Description]"
+                      dataType="wstr"
+                      length="58"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Description]"
+                      name="Service_Description" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Dim_Service_Type\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT-Load Fact_Passenger_Departures"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BC073753-D21F-4AFF-AAA2-59302C872EB9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT-Load Fact_Passenger_Departures"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+    d.Date_Key,
+    c.Carrier_Key,
+    w.Weather_Key,
+    cov.COVID_Key,
+    e.Event_Key,
+    st.Service_Type_Key,
+    f.Bus_Departures,
+    f.Passenger_Departures,
+    f.Passengers_Per_Bus,
+    f.Baseline_2019_Buses,
+    f.Baseline_2019_Passengers,
+    f.Bus_Recovery_Percent,
+    f.Passenger_Recovery_Percent,
+    f.Bus_WoW_Change,
+    f.Passenger_WoW_Change,
+    f.Bus_4wk_MA,
+    f.Passenger_4wk_MA,
+    f.Bus_12wk_MA,
+    f.Passenger_12wk_MA
+FROM dbo.FinalDataset f
+INNER JOIN dim.Dim_Date d 
+    ON d.Week_Date = TRY_CAST(f.Week_Date AS DATE)
+INNER JOIN dim.Dim_Carrier c 
+    ON c.Carrier_Name = f.Carrier_Name
+LEFT JOIN dim.Dim_Weather w 
+    ON ISNULL(w.Avg_Temp_F, -999) = ISNULL(f.Avg_Temp_F, -999)
+    AND ISNULL(w.Precipitation_Inches, -999) = ISNULL(f.Precipitation_Inches, -999)
+    AND w.Weather_Condition = ISNULL(f.Weather_Condition, 'Unknown')
+LEFT JOIN dim.Dim_COVID_Status cov 
+    ON cov.COVID_Period = f.COVID_Period
+    AND cov.Days_Since_Pandemic_Start = f.Days_Since_Pandemic_Start
+LEFT JOIN dim.Dim_Event e 
+    ON e.Is_Holiday = CASE WHEN f.Is_Holiday = 'True' THEN 1 ELSE 0 END
+    AND e.Is_Tourism_Peak = CASE WHEN f.Is_Tourism_Peak = 'True' THEN 1 ELSE 0 END
+    AND e.NYC_Event = ISNULL(f.NYC_Event, 'None')
+LEFT JOIN dim.Dim_Service_Type st 
+    ON st.Service_Type = f.Service_Type
+WHERE f.Week_Date IS NOT NULL
+  AND f.Carrier_Name IS NOT NULL;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_Key]"
+                      name="Date_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Carrier_Key]"
+                      name="Carrier_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Key]"
+                      name="Weather_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Key]"
+                      name="COVID_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Event_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Event_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Event_Key]"
+                      name="Event_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type_Key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type_Key]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Service_Type_Key]"
+                      name="Service_Type_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_Departures]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_Departures]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_Departures]"
+                      name="Bus_Departures"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_Departures]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_Departures]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_Departures]"
+                      name="Passenger_Departures"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passengers_Per_Bus]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passengers_Per_Bus]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passengers_Per_Bus]"
+                      name="Passengers_Per_Bus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Baseline_2019_Buses]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Baseline_2019_Buses]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Baseline_2019_Buses]"
+                      name="Baseline_2019_Buses"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Baseline_2019_Passengers]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Baseline_2019_Passengers]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Baseline_2019_Passengers]"
+                      name="Baseline_2019_Passengers"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_Recovery_Percent]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_Recovery_Percent]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_Recovery_Percent]"
+                      name="Bus_Recovery_Percent"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_Recovery_Percent]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_Recovery_Percent]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_Recovery_Percent]"
+                      name="Passenger_Recovery_Percent"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_WoW_Change]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_WoW_Change]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_WoW_Change]"
+                      name="Bus_WoW_Change"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_WoW_Change]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_WoW_Change]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_WoW_Change]"
+                      name="Passenger_WoW_Change"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_4wk_MA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_4wk_MA]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_4wk_MA]"
+                      name="Bus_4wk_MA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_4wk_MA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_4wk_MA]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_4wk_MA]"
+                      name="Passenger_4wk_MA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_12wk_MA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_12wk_MA]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Bus_12wk_MA]"
+                      name="Bus_12wk_MA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_12wk_MA]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_12wk_MA]"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].Columns[Passenger_12wk_MA]"
+                      name="Passenger_12wk_MA"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_Key]"
+                      dataType="i4"
+                      name="Date_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Carrier_Key]"
+                      dataType="i4"
+                      name="Carrier_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Key]"
+                      dataType="i4"
+                      name="Weather_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Key]"
+                      dataType="i4"
+                      name="COVID_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Event_Key]"
+                      dataType="i4"
+                      name="Event_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Service_Type_Key]"
+                      dataType="i4"
+                      name="Service_Type_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_Departures]"
+                      dataType="r8"
+                      name="Bus_Departures" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_Departures]"
+                      dataType="i4"
+                      name="Passenger_Departures" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passengers_Per_Bus]"
+                      dataType="r8"
+                      name="Passengers_Per_Bus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Baseline_2019_Buses]"
+                      dataType="i2"
+                      name="Baseline_2019_Buses" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Baseline_2019_Passengers]"
+                      dataType="i4"
+                      name="Baseline_2019_Passengers" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_Recovery_Percent]"
+                      dataType="r8"
+                      name="Bus_Recovery_Percent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_Recovery_Percent]"
+                      dataType="r8"
+                      name="Passenger_Recovery_Percent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_WoW_Change]"
+                      dataType="r8"
+                      name="Bus_WoW_Change" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_WoW_Change]"
+                      dataType="r8"
+                      name="Passenger_WoW_Change" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_4wk_MA]"
+                      dataType="r8"
+                      name="Bus_4wk_MA" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_4wk_MA]"
+                      dataType="r8"
+                      name="Passenger_4wk_MA" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Bus_12wk_MA]"
+                      dataType="r8"
+                      name="Bus_12wk_MA" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Passenger_12wk_MA]"
+                      dataType="r8"
+                      name="Passenger_12wk_MA" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_Key]"
+                      name="Date_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Carrier_Key]"
+                      name="Carrier_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Key]"
+                      name="Weather_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Key]"
+                      name="COVID_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Event_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Event_Key]"
+                      name="Event_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type_Key]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Service_Type_Key]"
+                      name="Service_Type_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_Departures]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_Departures]"
+                      name="Bus_Departures" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_Departures]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_Departures]"
+                      name="Passenger_Departures" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passengers_Per_Bus]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passengers_Per_Bus]"
+                      name="Passengers_Per_Bus" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Baseline_2019_Buses]"
+                      dataType="i2"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Baseline_2019_Buses]"
+                      name="Baseline_2019_Buses" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Baseline_2019_Passengers]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Baseline_2019_Passengers]"
+                      name="Baseline_2019_Passengers" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_Recovery_Percent]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_Recovery_Percent]"
+                      name="Bus_Recovery_Percent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_Recovery_Percent]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_Recovery_Percent]"
+                      name="Passenger_Recovery_Percent" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_WoW_Change]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_WoW_Change]"
+                      name="Bus_WoW_Change" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_WoW_Change]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_WoW_Change]"
+                      name="Passenger_WoW_Change" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_4wk_MA]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_4wk_MA]"
+                      name="Bus_4wk_MA" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_4wk_MA]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_4wk_MA]"
+                      name="Passenger_4wk_MA" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_12wk_MA]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Bus_12wk_MA]"
+                      name="Bus_12wk_MA" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_12wk_MA]"
+                      dataType="r8"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Passenger_12wk_MA]"
+                      name="Passenger_12wk_MA" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT-Load_COVID_Status"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7BBEBCE1-57AC-4668-B9BD-9546137C2A1D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT-Load_COVID_Status"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT-Load_COVID_Status\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    ROW_NUMBER() OVER (
+        ORDER BY Days_Since_Pandemic_Start
+    ) AS COVID_Key,
+    COVID_Period,
+    Economic_Period,
+    CASE WHEN Is_COVID_Period = 'True' THEN 1 ELSE 0 END AS Is_COVID_Period,
+    CASE WHEN Is_High_Inflation = 'True' THEN 1 ELSE 0 END AS Is_High_Inflation,
+    Days_Since_Pandemic_Start
+FROM dbo.FinalDataset
+WHERE COVID_Period IS NOT NULL;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT-Load_COVID_Status\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Key]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Key]"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Key]"
+                      name="COVID_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Period]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Period]"
+                      length="50"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[COVID_Period]"
+                      name="COVID_Period"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Economic_Period]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Economic_Period]"
+                      length="50"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Economic_Period]"
+                      name="Economic_Period"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_COVID_Period]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_COVID_Period]"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_COVID_Period]"
+                      name="Is_COVID_Period"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_High_Inflation]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_High_Inflation]"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_High_Inflation]"
+                      name="Is_High_Inflation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Days_Since_Pandemic_Start]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Days_Since_Pandemic_Start]"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].Columns[Days_Since_Pandemic_Start]"
+                      name="Days_Since_Pandemic_Start"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Key]"
+                      dataType="i8"
+                      name="COVID_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[COVID_Period]"
+                      dataType="wstr"
+                      length="50"
+                      name="COVID_Period" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Economic_Period]"
+                      dataType="wstr"
+                      length="50"
+                      name="Economic_Period" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_COVID_Period]"
+                      dataType="i4"
+                      name="Is_COVID_Period" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_High_Inflation]"
+                      dataType="i4"
+                      name="Is_High_Inflation" />
+                    <externalMetadataColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Days_Since_Pandemic_Start]"
+                      dataType="i2"
+                      name="Days_Since_Pandemic_Start" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Key]"
+                      dataType="i8"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Key]"
+                      name="COVID_Key" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Period]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[COVID_Period]"
+                      name="COVID_Period" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Economic_Period]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Economic_Period]"
+                      name="Economic_Period" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_COVID_Period]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_COVID_Period]"
+                      name="Is_COVID_Period" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_High_Inflation]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_High_Inflation]"
+                      name="Is_High_Inflation" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Days_Since_Pandemic_Start]"
+                      dataType="i2"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Days_Since_Pandemic_Start]"
+                      name="Days_Since_Pandemic_Start" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT-Load_COVID_Status\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Load Dim_Event"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A0F5545B-CC12-4E7D-9554-033BE988316D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Load Dim_Event"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Load Dim_Event\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    ROW_NUMBER() OVER (
+        ORDER BY Is_Holiday, NYC_Event, Is_Tourism_Peak
+    ) AS Event_Key,
+    CASE WHEN Is_Holiday = 'True' THEN 1 ELSE 0 END AS Is_Holiday,
+    ISNULL(NYC_Event, 'None') AS NYC_Event,
+    CASE WHEN Is_Tourism_Peak = 'True' THEN 1 ELSE 0 END AS Is_Tourism_Peak
+FROM dbo.FinalDataset;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load Dim_Event\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Event_Key]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Event_Key]"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Event_Key]"
+                      name="Event_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Holiday]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Holiday]"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Holiday]"
+                      name="Is_Holiday"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[NYC_Event]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NYC_Event]"
+                      length="50"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[NYC_Event]"
+                      name="NYC_Event"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Tourism_Peak]"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Tourism_Peak]"
+                      name="Is_Tourism_Peak"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Event_Key]"
+                      dataType="i8"
+                      name="Event_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Holiday]"
+                      dataType="i4"
+                      name="Is_Holiday" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NYC_Event]"
+                      dataType="wstr"
+                      length="50"
+                      name="NYC_Event" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      name="Is_Tourism_Peak" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Event_Key]"
+                      dataType="i8"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Event_Key]"
+                      name="Event_Key" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Holiday]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Holiday]"
+                      name="Is_Holiday" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NYC_Event]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NYC_Event]"
+                      name="NYC_Event" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Tourism_Peak]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Tourism_Peak]"
+                      name="Is_Tourism_Peak" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Event\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Load Dim_Weather"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{47946176-15B8-4848-8280-51A97E65BAE7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Load Dim_Weather"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Load Dim_Weather\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    ROW_NUMBER() OVER (
+        ORDER BY ISNULL(Avg_Temp_F, -999), 
+                 ISNULL(Precipitation_Inches, -999), 
+                 ISNULL(Weather_Condition, 'Unknown')
+    ) AS Weather_Key,
+    Avg_Temp_F,
+    Precipitation_Inches,
+    Snow_Inches,
+    ISNULL(Weather_Condition, 'Unknown') AS Weather_Condition,
+    CASE WHEN Is_Severe_Weather = 'True' THEN 1 ELSE 0 END AS Is_Severe_Weather
+FROM dbo.FinalDataset;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load Dim_Weather\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[SMRITIDELLINS15\SQLSERVER2022.PortAuthority_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Key]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Key]"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Key]"
+                      name="Weather_Key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Avg_Temp_F]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Avg_Temp_F]"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Avg_Temp_F]"
+                      name="Avg_Temp_F"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Precipitation_Inches]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Precipitation_Inches]"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Precipitation_Inches]"
+                      name="Precipitation_Inches"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Snow_Inches]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Snow_Inches]"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Snow_Inches]"
+                      name="Snow_Inches"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Condition]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Condition]"
+                      length="50"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weather_Condition]"
+                      name="Weather_Condition"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Severe_Weather]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Severe_Weather]"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].Columns[Is_Severe_Weather]"
+                      name="Is_Severe_Weather"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Key]"
+                      dataType="i8"
+                      name="Weather_Key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Avg_Temp_F]"
+                      dataType="ui1"
+                      name="Avg_Temp_F" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Precipitation_Inches]"
+                      dataType="r8"
+                      name="Precipitation_Inches" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Snow_Inches]"
+                      dataType="r8"
+                      name="Snow_Inches" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weather_Condition]"
+                      dataType="wstr"
+                      length="50"
+                      name="Weather_Condition" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Is_Severe_Weather]"
+                      dataType="i4"
+                      name="Is_Severe_Weather" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Key]"
+                      dataType="i8"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Key]"
+                      name="Weather_Key" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Avg_Temp_F]"
+                      dataType="ui1"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Avg_Temp_F]"
+                      name="Avg_Temp_F" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Precipitation_Inches]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Precipitation_Inches]"
+                      name="Precipitation_Inches" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Snow_Inches]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Snow_Inches]"
+                      name="Snow_Inches" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Condition]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weather_Condition]"
+                      name="Weather_Condition" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Severe_Weather]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Is_Severe_Weather]"
+                      name="Is_Severe_Weather" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load Dim_Weather\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL-Clear All Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2CAE49C5-F438-4076-AB6D-AF1D67DB7B82}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL-Clear All Tables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{017C77D0-ECAC-4469-8D48-FB98E8A6E5D0}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dim.Dim_Date;&#xA;TRUNCATE TABLE dim.Dim_Carrier;&#xA;TRUNCATE TABLE dim.Dim_Weather;&#xA;TRUNCATE TABLE dim.Dim_COVID_Status;&#xA;TRUNCATE TABLE dim.Dim_Event;&#xA;TRUNCATE TABLE dim.Dim_Service_Type;&#xA;TRUNCATE TABLE dbo.Fact_Passenger_Departures;&#xA;&#xA;PRINT 'Tables cleared - ETL ready';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C8478090-7A3C-4C9D-A12F-7C3A678E0EC4}"
+      DTS:From="Package\SQL-Clear All Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT-Load Dim_Date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{4FA5A0D0-0BD6-4C29-B96B-B0396EE66530}"
+      DTS:From="Package\DFT-Load Dim_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT- Load Dim_Carrier" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{50E833E3-342E-463D-8643-B04684484D0E}"
+      DTS:From="Package\DFT- Load Dim_Carrier"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DFT_Load Dim_Weather" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{4814680A-8B1A-446A-82D4-7A57AD2639B8}"
+      DTS:From="Package\DFT_Load Dim_Weather"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\DFT-Load_COVID_Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{78FF03C7-94C0-4226-A349-706B8B7C7C50}"
+      DTS:From="Package\DFT-Load_COVID_Status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\DFT_Load Dim_Event" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{F8CA49F5-7F04-4A78-BE7C-76438BAB3E17}"
+      DTS:From="Package\DFT_Load Dim_Event"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\DFT-Load Dim_Service_Type" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{31273F89-A7FE-4EC5-85AB-106A1E145F41}"
+      DTS:From="Package\DFT-Load Dim_Service_Type"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\DFT-Load Fact_Passenger_Departures" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="173.6,41.6"
+          Id="Package\DFT-Load Dim_Date"
+          TopLeft="32.642857136775,86.7352940727373" />
+        <NodeLayout
+          Size="173.6,41.6"
+          Id="Package\SQL-Clear All Tables"
+          TopLeft="29.0714286216059,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="117.65714287919,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.6352940727374"
+              Start="0,0"
+              End="0,32.1352940727374">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.1352940727374" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\DFT- Load Dim_Carrier"
+          TopLeft="21.9285714635435,167.617646916721" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="117.285714300159,128.335294072737">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.2823528439838"
+              Start="0,0"
+              End="0,31.7823528439838">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.7823528439838" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\DFT_Load Dim_Weather"
+          TopLeft="37.6428572112809,231.89999981768" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="115.128571463544,209.217646916721">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.3142857477373,22.6823529009588"
+              Start="0,0"
+              End="19.3142857477373,15.1823529009588">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.34117645047941" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.34117645047941"
+                    Point2="0,11.3411764504794"
+                    Point3="4,11.3411764504794" />
+                  <mssgle:LineSegment
+                    End="15.3142857477373,11.3411764504794" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.3142857477373,11.3411764504794"
+                    Point2="19.3142857477373,11.3411764504794"
+                    Point3="19.3142857477373,15.3411764504794" />
+                  <mssgle:LineSegment
+                    End="19.3142857477373,15.1823529009588" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\DFT-Load_COVID_Status"
+          TopLeft="45.5000000851494,301.62941156965" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="134.442857211281,273.49999981768">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9.45714287386858,28.1294117519703"
+              Start="0,0"
+              End="9.45714287386858,20.6294117519703">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.0647058759852" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.0647058759852"
+                    Point2="0,14.0647058759852"
+                    Point3="4,14.0647058759852" />
+                  <mssgle:LineSegment
+                    End="5.45714287386858,14.0647058759852" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.45714287386858,14.0647058759852"
+                    Point2="9.45714287386858,14.0647058759852"
+                    Point3="9.45714287386858,18.0647058759852" />
+                  <mssgle:LineSegment
+                    End="9.45714287386858,20.6294117519703" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\DFT_Load Dim_Event"
+          TopLeft="46.928571516762,369.876470397872" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="140.414285800956,343.22941156965">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.6470588282213"
+              Start="0,0"
+              End="0,19.1470588282213">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.1470588282213" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="214.4,41.6"
+          Id="Package\DFT-Load Dim_Service_Type"
+          TopLeft="24.7857143267685,447.337625257713" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="134.457142921765,411.476470397872">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.8611548598414"
+              Start="0,0"
+              End="0,28.3611548598414">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.3611548598414" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="258.4,41.6"
+          Id="Package\DFT-Load Fact_Passenger_Departures"
+          TopLeft="9.78571429483742,542.655217987078" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="135.485714310803,488.937625257713">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.717592729365"
+              Start="0,0"
+              End="0,46.217592729365">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.217592729365" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT-Load Dim_Date">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT-Load Dim_Date\OLE DB Source"
+          TopLeft="101.928571633843,4.73529411831736" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT-Load Dim_Date\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT- Load Dim_Carrier">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT- Load Dim_Carrier\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT- Load Dim_Carrier\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT_Load Dim_Weather">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT_Load Dim_Weather\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load Dim_Weather\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT-Load_COVID_Status">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT-Load_COVID_Status\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT-Load_COVID_Status\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT_Load Dim_Event">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT_Load Dim_Event\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load Dim_Event\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT-Load Dim_Service_Type">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT-Load Dim_Service_Type\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT-Load Dim_Service_Type\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT-Load Fact_Passenger_Departures">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT-Load Fact_Passenger_Departures\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
