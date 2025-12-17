@@ -1,0 +1,9 @@
+Category,Avg_Correlation,Max_Correlation,Count
+Recovery/Trend,0.9172,1.0,4
+Service Type,0.8263,0.9993,3
+Carrier-Specific,0.7057,0.9981,5
+Historical/Lagged,0.8505,0.9694,9
+Service Capacity,0.7831,0.9259,3
+Economic,0.7676,0.7676,1
+Weather,0.2386,0.418,7
+Calendar/Seasonal,0.2065,0.3619,11
