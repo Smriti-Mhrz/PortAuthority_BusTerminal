@@ -91,9 +91,9 @@ End-to-end business intelligence solution analyzing passenger traffic patterns a
 - Busiest months: July, August, December
 
 ## Author
-[Your Name]  
-[Your Email]  
-[LinkedIn Profile]
+Name: Smriti Maharjan  
+Email: smritimaharjan2025@gmail.com  
+Linkedin: www.linkedin.com/in/smritimaharjan200
 
 ## License
 This project is for academic/portfolio purposes.
